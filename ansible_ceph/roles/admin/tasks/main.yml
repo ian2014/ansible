@@ -38,6 +38,12 @@
     chdir: /home/localadmin/ceph_cluster
   become_user: "{{ ceph_user }}"
 
+#- name: Install ceph package
+#  command: ceph-deploy install "{{ nodes[0]['hostname'] }}" "{{ nodes[1]['hostname'] }}" "{{ nodes[2]['hostname'] }}"
+#  args:
+#    chdir: /home/localadmin/ceph_cluster
+#  become_user: "{{ ceph_user }}"
+
 - name: Modify ceph.conf
   blockinfile:
     path: /home/localadmin/ceph_cluster/ceph.conf
