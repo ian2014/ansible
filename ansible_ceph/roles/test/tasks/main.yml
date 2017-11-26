@@ -1,0 +1,47 @@
+---
+- include_vars: "{{ nodesfile }}"
+
+
+- debug:
+    msg: "{{ nodes[0]['hostname'] }}"
+
+- debug:
+    msg: "{{ nodes[1]['hostname'] }}"
+
+- name: Modify ceph.conf
+  blockinfile:
+    path: /home/localadmin/ceph_cluster/ceph.conf
+    block: |
+      osd pool default size = {{ poolSize }}
+      mon_pg_warn_max_per_osd = 0
+      rbd default features = 1
+      osd max object name len = 256
+      osd max object namespace len = 64
+
+      public_network = {{ pubNetwork }} 
+      cluster_network = {{ priNetwork }}
+
+      [osd]
+      osd journal size = {{ journalSize }}
+
+#- name: Remove localadmin ALL = (root) NOPASSWD:ALL
+#  lineinfile: dest=/etc/sudoers regexp="localadmin" state=absent
+
+#- name: localadmin ALL = (root) NOPASSWD:ALL
+#  lineinfile:
+#    dest: /etc/sudoers
+#    state: present
+#    regexp: "{{ ceph_user }}"
+#    line: "{{ ceph_user }} ALL = (root) NOPASSWD:ALL"
+
+#- name: sudoer.d/localadmin 
+#  file:
+#    path: /etc/sudoers.d/localadmin
+#    state: file
+#    mode: 0440
+
+#- name: Create ceph cluster
+#  command: touch ian.test 
+#  args: 
+#    chdir: /home/localadmin/ceph_cluster
+

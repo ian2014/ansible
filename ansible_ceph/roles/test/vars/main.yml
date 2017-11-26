@@ -1,0 +1,4 @@
+---
+home_path: /home/localadmin
+ceph_user: localadmin
+ceph_group: localadmin

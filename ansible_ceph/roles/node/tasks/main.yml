@@ -1,0 +1,35 @@
+---
+- include_vars: "{{ nodesfile }}"
+
+- name: Add localadmin NOPASSWD
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "{{ ceph_user }}"
+    line: "{{ ceph_user }} ALL = (root) NOPASSWD:ALL"
+
+- name: Add SSH to ceph cluster
+  authorized_key:
+    user: "{{ ceph_user }}"
+    key: "{{ lookup('file', '/home/localadmin/.ssh/id_rsa.pub') }}"
+
+- name: Setting hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Install ntp and ceph package
+  apt:
+    name: "{{ item }}"
+    allow_unauthenticated: yes
+    force: yes
+    update_cache: yes
+  with_items:
+    - ntp
+    - ceph
+    - ceph-osd
+    - ceph-mds
+    - ceph-mon
+    - radosgw
+
+
+

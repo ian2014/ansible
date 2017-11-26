@@ -1,0 +1,34 @@
+---
+#- name: Presetting ceph admin
+#  hosts: ceph-admin
+#  remote_user: localadmin
+#  sudo: yes
+
+#  roles:
+#    - test
+
+- name: Presetting ceph admin
+  hosts: ceph-admin
+  remote_user: localadmin
+  sudo: yes
+
+  roles:
+    - role: util/common
+    - role: util/genSSHKey
+
+- name: Presetting ceph node
+  hosts: ceph-node
+  remote_user: localadmin
+  sudo: yes
+
+  roles:
+    - role: util/common
+    - node
+
+- name: Deploy ceph
+  hosts: ceph-admin
+  remote_user: localadmin
+  sudo: yes
+
+  roles:
+    - admin  

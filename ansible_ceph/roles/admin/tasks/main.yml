@@ -1,0 +1,68 @@
+---
+- include_vars: "{{ nodesfile }}"
+
+- name: Preparing known_hosts entries
+  shell: ssh-keyscan -t rsa "{{ item.hostname }}"
+  with_items: "{{ nodes }}"
+  register: keyscans
+
+- name: Preparing ~/.ssh/known_hosts
+  lineinfile: 
+    dest: /home/{{ ceph_user }}/.ssh/known_hosts
+    create: yes
+    state: present
+    line: "{{ item.stdout }}"
+    regexp: "^{{ item.item.hostname }}"
+    owner: "{{ ceph_user }}"
+    group: "{{ ceph_group }}"
+  with_items: "{{ keyscans.results }}"
+
+- name: Install ceph-deploy
+  apt:
+    name: ceph-deploy
+    allow_unauthenticated: yes
+    force: yes
+    update_cache: yes
+
+- name: Create ceph_cluster directory
+  file:
+    path: /home/localadmin/ceph_cluster
+    state: directory
+    owner: "{{ ceph_user }}"
+    group: "{{ ceph_group }}"
+    mode: 0755
+
+- name: Create ceph cluster
+  command: ceph-deploy new "{{ nodes[0]['hostname'] }}" "{{ nodes[1]['hostname'] }}" "{{ nodes[2]['hostname'] }}"
+  args:
+    chdir: /home/localadmin/ceph_cluster
+  become_user: "{{ ceph_user }}"
+
+- name: Modify ceph.conf
+  blockinfile:
+    path: /home/localadmin/ceph_cluster/ceph.conf
+    block: |
+      osd pool default size = {{ poolSize }}
+      mon_pg_warn_max_per_osd = 0
+      rbd default features = 1
+      osd max object name len = 256
+      osd max object namespace len = 64
+
+      public_network = {{ pubNetwork }}
+      cluster_network = {{ priNetwork }}
+
+      [osd]
+      osd journal size = {{ journalSize }}
+
+#- name: Deploy ceph mon
+#  command: ceph-deploy mon create-initial
+#  args:
+#    chdir: /home/localadmin/ceph_cluster
+ # become_user: "{{ ceph_user }}"
+
+#- name: Overwrite ceph.conf to all ceph node
+#  command: ceph-deploy --overwrite-conf admin "{{ nodes[0]['hostname'] }}" "{{ nodes[1]['hostname'] }}" "{{ nodes[2]['hostname'] }}"
+#  args:
+#    chdir: /home/localadmin/ceph_cluster
+#  become_user: "{{ ceph_user }}"
+

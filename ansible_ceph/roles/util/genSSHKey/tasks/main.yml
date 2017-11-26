@@ -1,0 +1,14 @@
+---
+- name: Check if "~/.ssh/id_rsa" exist
+  stat:
+    path: /home/localadmin/.ssh/id_rsa
+  register: ssh_key
+
+- name: Generating SSH key
+  user:
+    name: "{{ ceph_user }}"
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+  when: ssh_key.stat.exists == False
+
