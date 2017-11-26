@@ -23,7 +23,7 @@
 
   roles:
     - role: util/common
-    - node
+    - role: ceph/node
 
 - name: Deploy ceph
   hosts: ceph-admin
@@ -32,3 +32,11 @@
 
   roles:
     - admin  
+
+- name: Create ceph osd
+  hosts: ceph-admin
+  remote_user: localadmin
+  sudo: yes
+
+  roles:
+    - ceph/osd

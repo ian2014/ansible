@@ -1,12 +1,12 @@
 ---
 - include_vars: "{{ nodesfile }}"
 
-- name: Preparing known_hosts entries
+- name: Prepare known_hosts entries
   shell: ssh-keyscan -t rsa "{{ item.hostname }}"
   with_items: "{{ nodes }}"
   register: keyscans
 
-- name: Preparing ~/.ssh/known_hosts
+- name: Prepare ~/.ssh/known_hosts
   lineinfile: 
     dest: /home/{{ ceph_user }}/.ssh/known_hosts
     create: yes
@@ -54,11 +54,11 @@
       [osd]
       osd journal size = {{ journalSize }}
 
-#- name: Deploy ceph mon
-#  command: ceph-deploy mon create-initial
-#  args:
-#    chdir: /home/localadmin/ceph_cluster
- # become_user: "{{ ceph_user }}"
+- name: Deploy ceph mon
+  command: ceph-deploy mon create-initial
+  args:
+    chdir: /home/localadmin/ceph_cluster
+  become_user: "{{ ceph_user }}"
 
 #- name: Overwrite ceph.conf to all ceph node
 #  command: ceph-deploy --overwrite-conf admin "{{ nodes[0]['hostname'] }}" "{{ nodes[1]['hostname'] }}" "{{ nodes[2]['hostname'] }}"

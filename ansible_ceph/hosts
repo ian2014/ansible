@@ -1,5 +1,5 @@
 [ceph-admin]
-10.0.0.186 ansible_connection=local 
+10.0.0.152 ansible_connection=local 
 
 [ceph-node]
 ceph1 ansible_connection=ssh ansible_ssh_user=localadmin ansible_ssh_pass=openstack ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_become_pass=openstack

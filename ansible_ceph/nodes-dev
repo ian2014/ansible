@@ -1,10 +1,19 @@
 nodes:
   - hostname: ceph1
     ip: 10.0.0.153
+    disk1: vdb
+    disk2: vdc
+    ssd1: /dev/vdd
   - hostname: ceph2
     ip: 10.0.0.154
+    disk1: vdb
+    disk2: vdc
+    ssd1: /dev/vdd
   - hostname: ceph3
     ip: 10.0.0.155
+    disk1: vdb
+    disk2: vdc
+    ssd1: /dev/vdd
 
 poolSize: 2
 pubNetwork: 10.0.0.0/22

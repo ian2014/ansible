@@ -1,0 +1,11 @@
+---
+- include_vars: "{{ nodesfile }}"
+
+- name: Create ceph osd
+  command: ceph-deploy osd prepare "{{ item.hostname }}":"{{ item.disk1 }}":"{{ item.ssd1 }}" \
+    "{{ item.hostname }}":"{{ item.disk2 }}":"{{ item.ssd1 }}"
+  args:
+    chdir: /home/localadmin/ceph_cluster
+  become_user: "{{ ceph_user }}"
+  with_items: "{{ nodes }}"
+
