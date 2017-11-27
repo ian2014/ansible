@@ -7,7 +7,9 @@ It use ceph-deploy tool to do somethings as follows:
   + Create ceph osd
 
 `You have to prepare ceph packages on ceph-node`
+
 If you want to use source.list of ceph, you have to modify `roles/ceph/node/tasks/main.yml` and `roles/admin/tasks/main.yml`
+
   + Remark roles/ceph/node/tasks/main.yml as follows:
   
   ```
