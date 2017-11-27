@@ -7,11 +7,11 @@ It use ceph-deploy tool to do somethings as follows:
 + Create ceph mon
 + Create ceph osd
 
-`You have to prepare ceph packages on ceph-node`
+==You have to prepare ceph packages on ceph-node==
 
 If you want to use source.list of ceph, you have to modify `roles/ceph/node/tasks/main.yml` and `roles/admin/tasks/main.yml`
 
-+ Remark roles/ceph/node/tasks/main.yml as follows:
++ Remark `roles/ceph/node/tasks/main.yml` as follows:
   
 ```
   #- name: Install ntp and ceph package
@@ -29,7 +29,7 @@ If you want to use source.list of ceph, you have to modify `roles/ceph/node/task
   #  - radosgw
 ```
   
-+ Remove remark roles/admin/tasks/main.yml as follows:
++ Remove remark `roles/admin/tasks/main.yml` as follows:
   
 ```
   - name: Install ceph package
@@ -110,8 +110,8 @@ CEPH3_NODE_HOSTNAME ansible_connection=ssh ...
   - You can change/add some value of variable as follows:
     * hostname
     * ip
-    * disk[1-2]: if you add disk3, you have to modify roles/ceph/osd/tasks/main.yml
-    * ssd1: if you add ssd2, you have to modify roles/ceph/osd/tasks/main.yml
+    * disk[1-2]: if you add disk3, you have to modify `roles/ceph/osd/tasks/main.yml`
+    * ssd1: if you add ssd2, you have to modify `roles/ceph/osd/tasks/main.yml`
     * poolSize: osd pool default size
     * pubNetwork: public network (storage network (10Gi))
     * priNetwork: cluster network (sync data network(40Gi))
