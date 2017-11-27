@@ -7,6 +7,7 @@ It use ceph-deploy tool to do somethings as follows:
 + Create ceph mon
 + Create ceph osd
 
+
 ::: warning
 *You have to prepare ceph packages on ceph-node*
 :::
