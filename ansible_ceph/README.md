@@ -41,6 +41,17 @@ If you want to use source.list of ceph, you have to modify `roles/ceph/node/task
     become_user: "{{ ceph_user }}"
 ```
 
+# Ansible version
+
+```
+ansible 2.4.1.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = [u'/home/localadmin/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python2.7/dist-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 2.7.6 (default, Nov 23 2017, 15:49:48) [GCC 4.8.4]
+```
+
 # Architecture
 
 ```
