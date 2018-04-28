@@ -18,4 +18,4 @@ nodes:
 poolSize: 2
 pubNetwork: 10.0.0.0/22
 priNetwork: 10.0.0.0/22
-journalSize: 1000
+journalSize: 10240
