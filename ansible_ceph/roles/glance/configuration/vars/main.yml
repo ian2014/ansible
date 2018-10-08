@@ -1,0 +1,9 @@
+CEPH_DIR: /etc/ceph
+NAME: client.glance
+glance_path: /etc/glance/glance-api.conf
+glance_user: glance
+glance_group: glance
+#db_account: novaadmin
+#db_pwd: openstack
+#VIP: 192.168.101.11
+

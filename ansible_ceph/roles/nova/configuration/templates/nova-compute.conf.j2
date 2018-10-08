@@ -1,0 +1,18 @@
+[DEFAULT]
+compute_driver=libvirt.LibvirtDriver
+[libvirt]
+virt_type=kvm
+inject_password = False
+inject_key = False
+inject_partition = -2
+block_migration_flag = VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_NON_SHARED_INC
+live_migration_flag = VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_PERSIST_DEST
+disk_cachemodes = "network=writeback"
+hw_disk_discard = unmap
+cpu_mode = host-model
+images_type = rbd
+images_rbd_pool = vms
+rbd_user = cinder
+rbd_secret_uuid = {{ ceph_uuid }} 
+live_migration_progress_timeout = 1800
+

@@ -1,0 +1,44 @@
+---
+- name: create qemu dir
+  shell: mkdir -p /var/log/qemu
+
+- name: generate cinder keyring
+  shell: ceph auth get-or-create {{ NAME }} -o {{ NAME }}.keyring
+  args:
+    chdir: "{{ CEPH_DIR }}"
+
+- name: generate cinder key
+  shell: ceph auth get-key {{ NAME }} -o {{ NAME }}.key
+  args:
+    chdir: "{{ HOME_DIR }}"
+
+- name: copy secret.xml to /home/localadmin/
+  template:
+    src: secret.xml.j2
+    dest: "{{ HOME_DIR }}/secret.xml"
+    mode: 0644
+
+- name: define a secret file via virsh on compute node
+  shell: virsh secret-define --file secret.xml
+  args:
+    chdir: "{{ HOME_DIR }}"
+
+- name: set a secret value via virsh on compute node
+  shell: virsh secret-set-value --secret {{ ceph_uuid }} --base64 $(cat {{ NAME }}.key) && rm {{ NAME }}.key secret.xml
+  args:
+    chdir: "{{ HOME_DIR }}"
+
+- name: copy nova-compute to /etc/nova/nova-compute.conf
+  template:
+    src: nova-compute.conf.j2
+    dest: "{{ NOVA_PATH }}"
+    owner: "{{ NOVA_USER }}"
+    group: "{{ NOVA_GROUP }}"
+    mode: 0600
+    backup: yes
+
+- name: restart nova-compute
+  service:
+    name: nova-compute
+    state: restarted
+

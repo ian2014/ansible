@@ -1,0 +1,10 @@
+---
+
+- name: Test 
+  hosts: test
+  remote_user: localadmin
+#  become: yes
+
+  roles:
+    - role: test/test_script
+

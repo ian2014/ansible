@@ -1,0 +1,44 @@
+- name: with_items with j2
+  shell: echo {{ num1 }} >> {{ num1 }}.testfile
+  args:
+    chdir: "{{ HOME_DIR }}" 
+#  with_items:
+#    - { keyring: "client.glance", osd: "allow class-read object_prefix rbd_children, allow rwx pool=images" }
+#    - { keyring: "client.cinder", osd: "allow class-read object_prefix rbd_children, allow rwx pool=volumes, allow rwx pool=vms, allow rx pool=images" }
+#    - { keyring: "client.cinder-backup", osd: "allow class-read object_prefix rbd_children, allow rwx pool=backups" }
+#- name: test uuid
+#  template:
+#    src: secret.xml.j2
+#    dest: /home/localadmin/secret.xml
+#    backup: yes
+
+#- name: validate uuid
+#  shell: echo "{{ ceph_uuid }}" >> /home/localadmin/uuid
+#  register: result
+
+#- name: shell script
+#  shell: echo "{{ string_value | quote }}"
+#  register: result
+#- name: whoami
+#  shell: whoami
+#  register: result
+
+#- name: debug
+#  debug: 
+#    var: result
+
+#- name: check the 'glance-api.conf' target exists
+#  stat:
+#    path: /etc/glance/glance-api.conf
+#  register: stat_glance
+
+#- debug:
+#    var: stat_glance
+
+#- name: run 2 times
+#  lineinfile:
+#    path: /etc/hosts
+#    regexp: '^127\.0\.1\.1'
+#    insertafter: EOF 
+#    line: '# 127.0.1.1 ubuntu' 
+#    state: present

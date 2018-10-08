@@ -1,0 +1,46 @@
+---
+- name: create qemu dir
+  shell: mkdir -p /var/log/qemu
+
+- name: install dependency packages for cinder
+  apt:
+    name: "{{ item }}"
+    force: yes
+    force_apt_get: yes
+  with_items:
+    - cinder-volume
+    - python-mysqldb
+    - qemu
+
+- name: generate cinder & cinder-backup keyring
+  shell: ceph auth get-or-create {{ item }} -o {{ item }}.keyring
+  args:
+    chdir: "{{ CEPH_DIR }}"
+  with_items:
+    - "{{ NAME }}"
+    - "{{ NAME }}-backup"
+
+- name: chown cinder & cinder-backup keyring
+  file:
+    path: "{{ CEPH_DIR }}/{{ item }}.keyring"
+    owner: "{{ CINDER_USER }}"
+    group: "{{ CINDER_GROUP }}"
+    mode: 0644
+  with_items:
+    - "{{ NAME }}"
+    - "{{ NAME }}-backup"
+
+- name: copy cinder to /etc/cinder/cinder.conf
+  template:
+    src: cinder.conf.j2
+    dest: "{{ CINDER_PATH }}"
+    owner: "{{ CINDER_USER }}"
+    group: "{{ CINDER_GROUP }}"
+    mode: 0644
+    backup: yes
+
+- name: restart cinder-volume
+  service:
+    name: cinder-volume
+    state: restarted
+

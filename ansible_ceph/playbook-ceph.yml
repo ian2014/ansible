@@ -1,0 +1,33 @@
+---
+- name: Ceph create pools and keyrings
+  hosts: ceph-admin
+  remote_user: localadmin
+  become: yes
+
+  roles:
+    - role: ceph/util
+
+- name: Configurating ceph and glance
+  hosts: glance
+  remote_user: localadmin
+  become: yes
+
+  roles:
+    - role: glance/configuration
+
+- name: Configurating ceph and nova
+  hosts: nova
+  remote_user: localadmin
+  become: yes
+
+  roles:
+    - role: nova/configuration
+
+- name: Configurating ceph and cinder
+  hosts: cinder
+  remote_user: localadmin
+  become: yes
+
+  roles:
+    - role: cinder/configuration
+

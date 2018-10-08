@@ -1,0 +1,23 @@
+########
+#  glance db
+########
+db_account: novaadmin
+db_pwd: openstack
+
+# keystone port
+########
+ks_auth_uri_port: 5000
+ks_auth_url_port: 5001
+ks_memcached_port: 11211
+
+# rabbit-mq
+rabbit_userid: openstack
+rabbit_pwd: openstack
+
+########
+#
+########
+VIP: 192.168.101.11
+V_HOSTNAME: iSCCtrl
+ceph_uuid: "{{ VIP | to_uuid }}" 
+

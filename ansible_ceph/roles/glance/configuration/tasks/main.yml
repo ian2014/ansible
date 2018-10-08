@@ -1,0 +1,26 @@
+---
+- name: generate glance keyring 
+  shell: ceph auth get-or-create {{ NAME }} -o {{ NAME }}.keyring
+  args:
+    chdir: "{{ CEPH_DIR }}"
+
+- name: chown glance keyring
+  file:
+    path: "{{ CEPH_DIR }}/{{ NAME }}.keyring"
+    owner: "{{ glance_user }}"
+    group: "{{ glance_group }}"
+    mode: 0644
+
+- name: copy glance-api to /etc/glance/glance-api.conf
+  template:
+    src: glance-api.conf.j2
+    dest: "{{ glance_path }}"
+    owner: "{{ glance_user }}"
+    group: "{{ glance_group }}"
+    mode: 0644
+    backup: yes
+
+- name: restart glance-api
+  service:
+    name: glance-api
+    state: restarted

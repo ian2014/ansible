@@ -1,0 +1,9 @@
+---
+HOME_DIR: /home/localadmin
+string_value: Hello World!
+num1: 1024
+num2: 1024
+num3: 1024
+#uuid: 192.168.1.10 
+#ceph_uuid: "{{ uuid | to_uuid }}"
+

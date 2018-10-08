@@ -1,0 +1,9 @@
+---
+home_path: /home/localadmin
+ceph_user: localadmin
+ceph_group: localadmin
+images_pool_pg: 1024
+vms_pool_pg: 1024
+volumes_pool_pg: 1024
+backups_pool_pg: 1024
+

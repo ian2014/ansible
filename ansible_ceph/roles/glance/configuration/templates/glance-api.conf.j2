@@ -1,0 +1,63 @@
+[DEFAULT]
+verbose = True
+rpc_backend = rabbit
+
+show_image_direct_url = True
+
+[cors]
+
+[cors.subdomain]
+
+[database]
+connection = mysql+pymysql://{{ db_account }}:{{ db_pwd }}@{{ VIP }}/glance
+backend = sqlalchemy
+
+[glance_store]
+stores = glance.store.rbd.Store,glance.store.http.Store
+default_store = rbd
+rbd_store_pool = images
+rbd_store_user = glance
+rbd_store_ceph_conf = /etc/ceph/ceph.conf
+rbd_store_chunk_size = 8
+
+[image_format]
+disk_formats = ami,ari,aki,vhd,vmdk,raw,qcow2,vdi,iso,root-tar
+
+[keystone_authtoken]
+auth_uri = http://{{ VIP }}:{{ ks_auth_uri_port }}
+auth_url = http://{{ VIP }}:{{ ks_auth_url_port }}
+memcached_servers = {{ VIP }}:{{ ks_memcached_port }}
+auth_type = password
+project_domain_name = default
+user_domain_name = default
+project_name = Service
+username = glance
+password = openstack
+
+[matchmaker_redis]
+
+[oslo_concurrency]
+
+[oslo_messaging_amqp]
+
+[oslo_messaging_notifications]
+driver = messagingv2
+
+[oslo_messaging_rabbit]
+rabbit_host = {{ VIP }}
+rabbit_userid = {{ rabbit_userid }}
+rabbit_password = {{ rabbit_pwd }}
+
+[oslo_policy]
+
+[paste_deploy]
+flavor = keystone
+
+[profiler]
+
+[store_type_location_strategy]
+
+[task]
+
+[taskflow_executor]
+

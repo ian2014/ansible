@@ -1,0 +1,7 @@
+HOME_DIR: /home/localadmin
+CEPH_DIR: /etc/ceph
+NAME: client.cinder
+NOVA_PATH: /etc/nova/nova-compute.conf
+NOVA_USER: nova
+NOVA_GROUP: nova
+
