@@ -13,3 +13,7 @@
 [cinder]
 192.168.101.12 ansible_connection=ssh ansible_ssh_user=localadmin ansible_ssh_pass=openstack ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_become_pass=openstack
 
+
+
+[admin-openrc:children]
+ceph-admin

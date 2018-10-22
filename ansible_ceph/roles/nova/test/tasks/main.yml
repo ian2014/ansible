@@ -1,0 +1,14 @@
+---
+- name: create network
+  command: neutron {{ keystone_auth }} net-create {{ NET_NAME }}
+
+- name: create subnet
+  command: |
+    neutron {{ keystone_auth }} subnet-create --name my-subnet \
+    --dns-nameserver {{ DNS }} --gateway {{ GATEWAY }} \
+    {{ NET_NAME }} {{ NETWORK }}
+
+- name: create VM
+  command: |
+    nova {{ keystone_auth }} boot --flavor m1.tiny --image {{ IMAGE_NAME }} \
+    --nic net-name={{ NET_NAME }} {{ VM_NAME }}

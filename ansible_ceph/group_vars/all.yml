@@ -15,9 +15,23 @@ rabbit_userid: openstack
 rabbit_pwd: openstack
 
 ########
-#
+# Gernal
 ########
 VIP: 192.168.101.11
 V_HOSTNAME: iSCCtrl
 ceph_uuid: "{{ VIP | to_uuid }}" 
+
+
+########
+# Testing
+########
+IMAGE_NAME: cirros
+FILE: cirros-0.3.4-x86_64-disk.img
+NET_NAME: my-net
+DNS: 8.8.8.8
+GATEWAY: 172.16.0.1
+NETWORK: 172.16.0.0/24
+VM_NAME: test-vm
+VOLUME_SIZE: 1
+VOLUME_NAME: volume1
 

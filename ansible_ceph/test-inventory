@@ -10,3 +10,5 @@
 
 #[cinder]
 
+[admin-openrc:children]
+test

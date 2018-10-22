@@ -1,0 +1,10 @@
+keystone_url: http://{{ VIP }}:{{ ks_auth_url_port }}/v3
+keystone_auth_url: --os-auth-url {{ keystone_url }}
+project_domain_name: --os-project-domain-name default
+user_domain_name: --os-user-domain-name default
+project_name: --os-project-name Admin
+username: --os-username admin
+password: --os-password openstack123!
+#identity_version: --os-identity-api-version 3
+keystone_auth: "{{ keystone_auth_url }} {{ project_domain_name }} {{ user_domain_name }} {{ project_name }} {{ username }} {{ password }}"
+

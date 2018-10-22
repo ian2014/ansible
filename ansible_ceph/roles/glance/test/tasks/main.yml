@@ -1,0 +1,14 @@
+---
+- name: copy cirros image to controller node
+  copy:
+    src: "templates/{{ FILE }}"
+    dest: "/home/localadmin/{{ FILE }}"
+    
+- name: upload image via glance
+  command: |
+    glance {{ keystone_auth }} image-create --name {{ IMAGE_NAME }} \
+    --file {{ FILE }} \
+    --disk-format qcow2 --container-format bare \
+    --visibility public --progress
+  args:
+    chdir: /home/localadmin/

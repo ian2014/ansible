@@ -1,0 +1,35 @@
+---
+- name: Upload image, create VM and attach volume 
+  hosts: ceph-admin
+  remote_user: localadmin
+  become: yes
+
+  roles:
+    - role: glance/test
+    - role: nova/test
+    - role: cinder/test
+
+- name: Cleanup all testing
+  hosts: ceph-admin
+  remote_user: localadmin
+
+  tasks:
+
+  - name: Dettach volume
+    command: |
+      openstack {{ keystone_auth }} server remove volume \
+      {{ VM_NAME }} {{ VOLUME_NAME }}
+
+  - name: Delete volume
+    command: openstack {{ keystone_auth }} volume delete {{ VOLUME_NAME }}
+
+  - name: Delete VM
+    command: openstack {{ keystone_auth }} server delete {{ VM_NAME }} 
+
+  - name: Delete network
+    command: openstack {{ keystone_auth }} network delete {{ NET_NAME }}
+
+  - name: Delete image
+    command: openstack {{ keystone_auth }} image delete {{ IMAGE_NAME }}
+
+

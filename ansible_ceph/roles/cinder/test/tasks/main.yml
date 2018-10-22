@@ -1,0 +1,14 @@
+---
+- name: create volume 1 gb
+  command: openstack {{ keystone_auth }} volume create --size {{ VOLUME_SIZE }} {{ VOLUME_NAME }}
+
+- name: attach volume to VM
+  command: openstack  {{ keystone_auth }} server add volume {{ VM_NAME }} {{ VOLUME_NAME }}
+  register: result
+  until: result.failed == false
+  retries: 5
+  delay: 30
+
+#- name: print attach volume log
+#  debug:
+#    var: result
